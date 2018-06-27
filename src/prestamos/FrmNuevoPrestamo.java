@@ -5,6 +5,11 @@
  */
 package prestamos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,8 +21,39 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
     /**
      * Creates new form FrmNuevoPrestamo
      */
+    Prestamos a = new Prestamos();
+    ResultSet rstCarnets=null;
+    DefaultComboBoxModel mdlCarnets = new DefaultComboBoxModel();
+    ResultSet rstArticulos=null; 
+    DefaultComboBoxModel mdlArticulos = new DefaultComboBoxModel();
     public FrmNuevoPrestamo() {
         initComponents();
+        rstCarnets= a.Carnets();
+        rstArticulos = a.Articulos();
+        mdlCarnets.addElement("Seleccionar");
+         try {
+            while (rstCarnets.next()){
+                
+                mdlCarnets.addElement(rstCarnets.getString(1));
+            }
+            cmbCarnet.setModel(mdlCarnets);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmNuevoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+         mdlArticulos.addElement("Seleccionar");
+         try {
+            while (rstArticulos.next()){
+                
+                mdlArticulos.addElement(rstArticulos.getString(2));
+            }
+            cmbArticulo.setModel(mdlArticulos);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmNuevoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
     }
 
     /**
@@ -29,10 +65,10 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbCarnet = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbArticulo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -47,6 +83,11 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Agregar alumno");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Elija el carnet:");
 
@@ -83,7 +124,7 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(32, 32, 32)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1)
@@ -100,7 +141,7 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbArticulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextField1)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -121,11 +162,11 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jButton2))
                 .addGap(20, 20, 20)
@@ -150,10 +191,16 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Prestamos a = new Prestamos();
+        
         a.insertarPrestamo(10,"LM1602" , 1, 2, "2018/06/30");
         JOptionPane.showMessageDialog(null,"Prestamo exitoso");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FrmAgregarAlumno obj = new FrmAgregarAlumno();
+        obj.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,11 +238,11 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbArticulo;
+    private javax.swing.JComboBox<String> cmbCarnet;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
