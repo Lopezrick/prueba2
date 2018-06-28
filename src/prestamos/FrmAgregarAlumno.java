@@ -50,7 +50,25 @@ public class FrmAgregarAlumno extends javax.swing.JFrame {
             }
         });
 
+        txtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresKeyTyped(evt);
+            }
+        });
+
+        txtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Carnet:");
+
+        txtCarnet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCarnetKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +122,64 @@ public class FrmAgregarAlumno extends javax.swing.JFrame {
         FrmNuevoPrestamo al=new FrmNuevoPrestamo();
         al.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtCarnetKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCarnetKeyTyped
+        // TODO add your handling code here:
+        char tecla= evt.getKeyChar();
+        if(Character.isLetter(tecla)&&txtCarnet.getText().length()<2){
+            
+        }
+        else if(Character.isDigit(tecla)&&txtCarnet.getText().length()>=2){
+            
+        }        
+        else{
+            evt.consume();
+        }
+        
+         if(txtCarnet.getText().length()>6){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCarnetKeyTyped
+
+    private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
+        // TODO add your handling code here:
+        char tecla = evt.getKeyChar();
+        if(Character.isLetter(tecla)||Character.isSpace(tecla)){
+            if(txtNombres.getText().length()<2&& Character.isSpace(tecla)){
+                evt.consume();
+            }
+            else{
+                
+            }
+        }
+        else{
+            evt.consume();
+        }
+        
+        if(txtNombres.getText().length()>48){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombresKeyTyped
+
+    private void txtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosKeyTyped
+        // TODO add your handling code here:
+        char tecla = evt.getKeyChar();
+        if(Character.isLetter(tecla)||Character.isSpace(tecla)){
+            if(txtApellidos.getText().length()<2&& Character.isSpace(tecla)){
+                evt.consume();
+            }
+            else{
+                
+            }
+        }
+        else{
+            evt.consume();
+        }
+        
+        if(txtApellidos.getText().length()>48){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApellidosKeyTyped
 
     /**
      * @param args the command line arguments
