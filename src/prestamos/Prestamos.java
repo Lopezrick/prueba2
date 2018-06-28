@@ -24,4 +24,8 @@ public class Prestamos {
       public ResultSet Articulos() {
         return cn.getValores("SELECT*FROM articulos");
     }
+      public void agregarArticulo(int id, String descripcion) {
+        cn.UID("INSERT INTO articulos(idArticulo,descripcion) VALUES('" + id + "','" + descripcion + "')");
+        
+    }
 }
