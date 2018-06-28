@@ -5,6 +5,8 @@
  */
 package prestamos;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author TOBIAS
@@ -94,8 +96,13 @@ public class FrmAgregarAlumno extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
         Prestamos a = new Prestamos();
         a.agregarAlumno(txtCarnet.getText(),txtNombres.getText(), txtApellidos.getText());
+        dispose();
+        JOptionPane.showMessageDialog(null,"Se agregó exitosamente");
+        FrmNuevoPrestamo al=new FrmNuevoPrestamo();
+        al.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

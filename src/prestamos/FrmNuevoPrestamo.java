@@ -26,8 +26,13 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
     DefaultComboBoxModel mdlCarnets = new DefaultComboBoxModel();
     ResultSet rstArticulos=null; 
     DefaultComboBoxModel mdlArticulos = new DefaultComboBoxModel();
+    DefaultComboBoxModel mdlDia = new DefaultComboBoxModel();
+   
     public FrmNuevoPrestamo() {
         initComponents();
+         mdlDia.addElement("DIAS");
+         cmbDia.setModel(mdlDia);
+         cmbDia.setEnabled(false);
         rstCarnets= a.Carnets();
         rstArticulos = a.Articulos();
         mdlCarnets.addElement("Seleccionar");
@@ -55,6 +60,25 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
         }
          
     }
+    private boolean Bisiesto(int a){
+        
+            boolean bisiesto=false;
+            if(a%4==0){
+                
+            if(a%100==0 ){
+                if(a%400==0){
+                    bisiesto=true;
+                }
+                else{
+                    bisiesto=false;               }
+            }
+            else{
+            bisiesto=true;    
+            }
+            }
+            
+            return bisiesto;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,13 +96,13 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        cmbAnio = new javax.swing.JComboBox<>();
+        cmbDia = new javax.swing.JComboBox<>();
+        cmbMes = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +121,12 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
 
         jLabel3.setText("Cantidad:");
 
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("Fecha:");
 
         jButton3.setText("Realizar prestamo");
@@ -108,11 +138,19 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
 
         jLabel5.setText("Año/Mes/Dia");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AÑO", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2026", "2027", "2028", "2029", "2030" }));
+        cmbAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AÑO", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2026", "2027", "2028", "2029", "2030" }));
+        cmbAnio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAnioActionPerformed(evt);
+            }
+        });
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MES", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MES", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        cmbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,16 +178,16 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbArticulo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField1)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cmbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                                .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(55, 55, 55)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
@@ -174,13 +212,13 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(21, 21, 21))
@@ -200,7 +238,96 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
         FrmAgregarAlumno obj = new FrmAgregarAlumno();
         obj.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
+        // TODO add your handling code here:
+        int i = cmbMes.getSelectedIndex();
+        mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+        if(i==0){
+            cmbDia.setEnabled(false);
+        }
+        else{
+            cmbDia.setEnabled(true);
+        }
+        
+        if(i==1||i==3||i==5||i==7||i==8||i==10||i==12){
+           
+           for(int j=1;j<=31;j++){
+               mdlDia.addElement(""+j);
+           }
+            
+        }
+        else if(i==2){
+            if(cmbAnio.getSelectedIndex()==0){
+              for(int j=1;j<=28;j++){
+               mdlDia.addElement(""+j);
+              }
+            }
+            else{
+                int a= Integer.parseInt((String) cmbAnio.getSelectedItem());
+                
+            if(Bisiesto(a)==true){
+             for(int j=1;j<=29;j++){
+               mdlDia.addElement(""+j);
+           }    
+            }else{
+             for(int j=1;j<=28;j++){
+               mdlDia.addElement(""+j);
+           }   
+            }    
+            }
+            
+            
+             
+        }
+        else{
+             for(int j=1;j<=30;j++){
+               mdlDia.addElement(""+j);
+           }
+        }
+        cmbDia.setModel(mdlDia);
+        
+    }//GEN-LAST:event_cmbMesActionPerformed
+
+    private void cmbAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAnioActionPerformed
+        // TODO add your handling code here:
+        
+         if(cmbAnio.getSelectedIndex()!=0){
+             int a= Integer.parseInt((String) cmbAnio.getSelectedItem());
+        if(cmbMes.getSelectedIndex()==2 && Bisiesto(a)==true){
+            mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+            for(int j=1;j<=29;j++){
+               mdlDia.addElement(""+j);
+           }  
+        }
+        else{
+            mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+            for(int j=1;j<=28;j++){
+               mdlDia.addElement(""+j);
+           }  
+        }
+        cmbDia.setModel(mdlDia);     
+         }       
+        
+    }//GEN-LAST:event_cmbAnioActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        // TODO add your handling code here:
+        char tecla= evt.getKeyChar();
+        if(Character.isDigit(tecla)){
+            if(txtCantidad.getText().length()>1){
+                evt.consume();
+            }
+        }
+        else{
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadKeyTyped
 
     /**
      * @param args the command line arguments
@@ -238,19 +365,19 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbAnio;
     private javax.swing.JComboBox<String> cmbArticulo;
     private javax.swing.JComboBox<String> cmbCarnet;
+    private javax.swing.JComboBox<String> cmbDia;
+    private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 }
