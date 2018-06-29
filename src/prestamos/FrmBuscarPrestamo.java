@@ -5,11 +5,13 @@
  */
 package prestamos;
 
+import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,9 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrmBuscarPrestamo extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmBuscarPrestamo
-     */
+    
     Prestamos a=new Prestamos();
     DefaultTableModel mdlTabla=new DefaultTableModel();
     ResultSet rstTabla=null;
@@ -31,9 +31,10 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
 
     public FrmBuscarPrestamo() {
         initComponents();
+        
         Actualizar();
         rbCarnet.setSelected(true);
-        cmbCarnet.setEnabled(false);
+        cmbCodigos.setEnabled(false);
     }
     private void Actualizar(){
         mdlCodigos.removeAllElements();
@@ -88,11 +89,12 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
         cmbCarnet = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cmbCodigos = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,7 +120,12 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
 
         jLabel3.setText("Codigo Prestamo");
 
-        jButton1.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Mostrar pendientes");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -137,12 +144,27 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
         jTable1.setModel(mdlTabla);
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,19 +180,11 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbCarnet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbCodigos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rbCarnet)
-                                .addGap(438, 438, 438)
-                                .addComponent(jButton1)
-                                .addGap(27, 27, 27))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(rbCarnet))
+                        .addGap(143, 143, 143)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -182,15 +196,18 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cmbCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbCarnet)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbCodigo)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbCodigos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rbCarnet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rbCodigo)
+                            .addComponent(jLabel3)
+                            .addComponent(cmbCodigos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
@@ -240,7 +257,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
         
             try {
                 while(rstTabla.next()){
-                    if(rstTabla.getDate(8).equals("")){
+                    if(rstTabla.getDate(8)==null){
                     mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
                     }
                     
@@ -249,6 +266,52 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
                 Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
             }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+         LimpiarTabla();
+        if(rbCodigo.isSelected()&&cmbCodigos.getSelectedIndex()!=0){
+            
+        mdlTabla.setColumnIdentifiers(new Object []{"Codigo","Carnet","Nombres","Apellidos","Articulo","Cantidad","Fecha pedido","Fecha devolucion"});
+        
+        rstTabla=a.buscarporCodigo(cmbCodigos.getSelectedIndex());
+        
+            try {
+                while(rstTabla.next()){
+                    
+                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if(rbCarnet.isSelected()&&cmbCarnet.getSelectedIndex()!=0){
+                
+        mdlTabla.setColumnIdentifiers(new Object []{"Codigo","Carnet","Nombres","Apellidos","Articulo","Cantidad","Fecha pedido","Fecha devolucion"});
+        
+        rstTabla=a.buscarporCarnet(cmbCarnet.getSelectedItem()+"");
+        
+            try {
+                while(rstTabla.next()){
+                    
+                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FrmPrincipal obj = new FrmPrincipal();
+        this.dispose();
+        obj.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +349,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cmbCarnet;
     private javax.swing.JComboBox<String> cmbCodigos;
     private javax.swing.JButton jButton1;

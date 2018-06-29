@@ -41,6 +41,9 @@ public class Prestamos {
         return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, alumnos.nombres, alumnos.apellidos, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet = detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo "));
     }
       public ResultSet buscarporCarnet(String carnet) {
-        return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet =  detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo WHERE (((alumnos.carnet)='"+carnet+"'));"));
+        return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, alumnos.nombres, alumnos.apellidos, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet = detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo WHERE (((alumnos.carnet)='"+carnet+"'));"));
+    }
+      public ResultSet buscarporCodigo(int codigo) {
+        return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, alumnos.nombres, alumnos.apellidos, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet = detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo WHERE (((detalleprestamo.codPrestamo)='"+codigo+"'));"));
     }
 }
