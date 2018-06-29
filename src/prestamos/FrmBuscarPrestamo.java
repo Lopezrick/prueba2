@@ -5,6 +5,13 @@
  */
 package prestamos;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author RICK LOPEZ
@@ -14,8 +21,54 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
     /**
      * Creates new form FrmBuscarPrestamo
      */
+    Prestamos a=new Prestamos();
+    DefaultTableModel mdlTabla=new DefaultTableModel();
+    ResultSet rstTabla=null;
+    ResultSet rstCarnet=null;
+    ResultSet rstCodigos=null;
+    DefaultComboBoxModel mdlCarnets = new DefaultComboBoxModel();
+    DefaultComboBoxModel mdlCodigos = new DefaultComboBoxModel();
+
     public FrmBuscarPrestamo() {
         initComponents();
+        Actualizar();
+        rbCarnet.setSelected(true);
+        cmbCarnet.setEnabled(false);
+    }
+    private void Actualizar(){
+        mdlCodigos.removeAllElements();
+        mdlCarnets.removeAllElements();
+        rstCarnet= a.Carnets();
+        rstCodigos = a.codigosPrestamo();
+        mdlCarnets.addElement("Seleccionar");
+         try {
+            while (rstCarnet.next()){
+                
+                mdlCarnets.addElement(rstCarnet.getString(1));
+            }
+            cmbCarnet.setModel(mdlCarnets);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmNuevoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+         mdlCodigos.addElement("Seleccionar");
+         try {
+            while (rstCodigos.next()){
+                
+                mdlCodigos.addElement(rstCodigos.getString(1));
+            }
+            cmbCodigos.setModel(mdlCodigos);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmNuevoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void LimpiarTabla(){
+        int filas=mdlTabla.getRowCount();
+        for (int i=0; i<filas;i++){
+            mdlTabla.removeRow(0);
+        }
     }
 
     /**
@@ -27,13 +80,14 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        radios = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbCarnet = new javax.swing.JRadioButton();
+        rbCodigo = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbCarnet = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbCodigos = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -44,35 +98,43 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar por:");
 
-        jRadioButton1.setText("Carnet");
+        radios.add(rbCarnet);
+        rbCarnet.setText("Carnet");
+        rbCarnet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCarnetActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setText("Codigo Prestamo");
+        radios.add(rbCodigo);
+        rbCodigo.setText("Codigo Prestamo");
+        rbCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCodigoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Carnet:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel3.setText("Codigo Prestamo");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton1.setText("Buscar");
 
         jButton2.setText("Mostrar pendientes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Mostrar todos");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
-        ));
+        });
+
+        jTable1.setModel(mdlTabla);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -84,31 +146,32 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton3)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jRadioButton2))
-                                    .addGap(88, 88, 88)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel3))
-                                    .addGap(50, 50, 50)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(rbCodigo))
+                                .addGap(88, 88, 88)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbCarnet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbCodigos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rbCarnet)
+                                .addGap(438, 438, 438)
+                                .addComponent(jButton1)
+                                .addGap(27, 27, 27))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
-                        .addComponent(jButton2))
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,27 +180,75 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton1)
+                    .addComponent(cmbCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
+                    .addComponent(rbCarnet)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbCodigo)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(cmbCodigos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rbCarnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCarnetActionPerformed
+        // TODO add your handling code here:
+        cmbCarnet.setEnabled(true);
+        cmbCodigos.setEnabled(false);
+    }//GEN-LAST:event_rbCarnetActionPerformed
+
+    private void rbCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCodigoActionPerformed
+        // TODO add your handling code here:
+        cmbCarnet.setEnabled(false);
+        cmbCodigos.setEnabled(true);
+    }//GEN-LAST:event_rbCodigoActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         LimpiarTabla();
+        mdlTabla.setColumnIdentifiers(new Object []{"Codigo","Carnet","Nombres","Apellidos","Articulo","Cantidad","Fecha pedido","Fecha devolucion"});
+        
+        rstTabla=a.mostrarTodos();
+        
+            try {
+                while(rstTabla.next()){
+                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        LimpiarTabla();
+        mdlTabla.setColumnIdentifiers(new Object []{"Codigo","Carnet","Nombres","Apellidos","Articulo","Cantidad","Fecha pedido","Fecha devolucion"});
+        
+        rstTabla=a.mostrarTodos();
+        
+            try {
+                while(rstTabla.next()){
+                    if(rstTabla.getDate(8).equals("")){
+                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    }
+                    
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,17 +286,18 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbCarnet;
+    private javax.swing.JComboBox<String> cmbCodigos;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.ButtonGroup radios;
+    private javax.swing.JRadioButton rbCarnet;
+    private javax.swing.JRadioButton rbCodigo;
     // End of variables declaration//GEN-END:variables
 }

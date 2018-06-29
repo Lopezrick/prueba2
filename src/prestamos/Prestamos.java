@@ -38,7 +38,7 @@ public class Prestamos {
         cn.UID("UPDATE detalleprestamo SET fechaDevolucion='" + fecha + "'  WHERE codPrestamo='" + codigo + "'");
     }
       public ResultSet mostrarTodos() {
-        return (cn.getValores(" SELECT detalleprestamo.codPrestamo, alumnos.carnet, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet = detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo"));
+        return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, alumnos.nombres, alumnos.apellidos, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet = detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo "));
     }
       public ResultSet buscarporCarnet(String carnet) {
         return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet =  detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo WHERE (((alumnos.carnet)='"+carnet+"'));"));
