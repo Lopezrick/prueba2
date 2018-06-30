@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,13 +27,26 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
     ResultSet rstTabla=null;
     ResultSet rstCodigos=null;
     DefaultComboBoxModel mdlCodigos = new DefaultComboBoxModel();
+    DefaultComboBoxModel mdlDia = new DefaultComboBoxModel();
 
     public FrmCancelarPrestamo() {
         initComponents();
         mdlTabla.setColumnIdentifiers(new Object []{"Codigo","Carnet","Nombres","Apellidos","Articulo","Cantidad","Fecha pedido","Fecha devolucion"});
-        
+        mdlCodigos.addElement("Seleccionar");
         rstTabla=a.mostrarTodos();
-        
+        rstCodigos=a.codigosPrestamo();
+         try {
+            while (rstCodigos.next()){
+                if(rstCodigos.getDate(6)==null){
+                 mdlCodigos.addElement(rstCodigos.getInt(1));   
+                }
+                
+            }
+            cmbCodigos.setModel(mdlCodigos);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmNuevoPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+        }
             try {
                 while(rstTabla.next()){
                     if(rstTabla.getDate(8)==null){
@@ -43,6 +57,33 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Actualizar();
+    }
+    private void Actualizar(){
+        mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+         cmbDia.setModel(mdlDia);
+         cmbDia.setEnabled(false);
+        
+    }
+     private boolean Bisiesto(int a){
+        
+            boolean bisiesto=false;
+            if(a%4==0){
+                
+            if(a%100==0 ){
+                if(a%400==0){
+                    bisiesto=true;
+                }
+                else{
+                    bisiesto=false;               }
+            }
+            else{
+            bisiesto=true;    
+            }
+            }
+            
+            return bisiesto;
     }
 
     /**
@@ -60,9 +101,9 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmbCodigos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cmbAnio = new javax.swing.JComboBox<>();
+        cmbMes = new javax.swing.JComboBox<>();
+        cmbDia = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -78,13 +119,33 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha de devolucion:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AÑO:", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
+        cmbAnio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AÑO:", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030" }));
+        cmbAnio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAnioActionPerformed(evt);
+            }
+        });
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MES:", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MES:", "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" }));
+        cmbMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMesActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Guardar devolucion");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,34 +154,33 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(207, 207, 207)
+                        .addComponent(jLabel1)
+                        .addGap(423, 423, 423))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
-                        .addGap(57, 57, 57)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(246, 246, 246)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(cmbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbCodigos, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jButton2))
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(207, 207, 207)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                                .addComponent(cmbCodigos, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)))))
+                .addGap(97, 97, 97))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 961, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,15 +197,104 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAnioActionPerformed
+        // TODO add your handling code here:
+          if(cmbAnio.getSelectedIndex()!=0){
+             int a= Integer.parseInt((String) cmbAnio.getSelectedItem());
+        if(cmbMes.getSelectedIndex()==2 && Bisiesto(a)==true){
+            mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+            for(int j=1;j<=29;j++){
+               mdlDia.addElement(""+j);
+           }  
+        }
+        else{
+            mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+            for(int j=1;j<=28;j++){
+               mdlDia.addElement(""+j);
+           }  
+        }
+        cmbDia.setModel(mdlDia);     
+         }       
+    }//GEN-LAST:event_cmbAnioActionPerformed
+
+    private void cmbMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMesActionPerformed
+        // TODO add your handling code here:
+        int i = cmbMes.getSelectedIndex();
+        mdlDia.removeAllElements();
+        mdlDia.addElement("DIAS");
+        if(i==0){
+            cmbDia.setEnabled(false);
+        }
+        else{
+            cmbDia.setEnabled(true);
+        }
+        
+        if(i==1||i==3||i==5||i==7||i==8||i==10||i==12){
+           
+           for(int j=1;j<=31;j++){
+               mdlDia.addElement(""+j);
+           }
+            
+        }
+        else if(i==2){
+            if(cmbAnio.getSelectedIndex()==0){
+              for(int j=1;j<=28;j++){
+               mdlDia.addElement(""+j);
+              }
+            }
+            else{
+                int a= Integer.parseInt((String) cmbAnio.getSelectedItem());
+                
+            if(Bisiesto(a)==true){
+             for(int j=1;j<=29;j++){
+               mdlDia.addElement(""+j);
+           }    
+            }else{
+             for(int j=1;j<=28;j++){
+               mdlDia.addElement(""+j);
+           }   
+            }    
+            }
+            
+            
+             
+        }
+        else{
+             for(int j=1;j<=30;j++){
+               mdlDia.addElement(""+j);
+           }
+        }
+        cmbDia.setModel(mdlDia);
+    }//GEN-LAST:event_cmbMesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(cmbAnio.getSelectedIndex()==0||cmbCodigos.getSelectedIndex()==0||cmbDia.getSelectedIndex()==0||cmbMes.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(null,"Debe seleccionar todos los campos");
+        }
+        else{
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        FrmPrincipal obj=new FrmPrincipal();
+        obj.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,12 +332,12 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbAnio;
     private javax.swing.JComboBox<String> cmbCodigos;
+    private javax.swing.JComboBox<String> cmbDia;
+    private javax.swing.JComboBox<String> cmbMes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
