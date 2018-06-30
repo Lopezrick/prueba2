@@ -5,6 +5,9 @@
  */
 package prestamos;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Prestamos {
      Conexion cn = new Conexion();
@@ -46,4 +49,28 @@ public class Prestamos {
       public ResultSet buscarporCodigo(int codigo) {
         return (cn.getValores("SELECT detalleprestamo.codPrestamo, alumnos.carnet, alumnos.nombres, alumnos.apellidos, articulos.descripcion, detalleprestamo.cantidad, detalleprestamo.fechaPedido, detalleprestamo.fechaDevolucion FROM articulos INNER JOIN (alumnos INNER JOIN detalleprestamo ON alumnos.carnet = detalleprestamo.carnet) ON articulos.idArticulo = detalleprestamo.idArticulo WHERE (((detalleprestamo.codPrestamo)='"+codigo+"'));"));
     }
+      public String siguienteCod(){
+          ResultSet rs=null;
+          rs=codigosPrestamo();
+          String cod="";
+          try {
+                while(rs.next()){
+                    cod="";
+                    cod=rs.getString(1);
+                    
+                }
+            
+      }  catch (SQLException ex) {
+             Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
+         }
+          int l=cod.length()-1;
+          String ceros=cod.substring(0, l);
+          int n= Integer.parseInt(cod)+1;
+          cod=ceros+n;
+          return cod; 
+    }
+      public void Devolver(String codigo,String fecha){
+           cn.UID("UPDATE detalleprestamo SET fechaDevolucion='" + fecha + "' where codPrestamo='" + codigo + "'");
+
+      }
 }

@@ -31,6 +31,22 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
 
     public FrmCancelarPrestamo() {
         initComponents();
+        
+            Actualizar();
+    }
+    public void LimpiarTabla(){
+        int filas=mdlTabla.getRowCount();
+        for (int i=0; i<filas;i++){
+            mdlTabla.removeRow(0);
+        }
+    }
+    private void Actualizar(){
+        mdlDia.removeAllElements();
+        mdlCodigos.removeAllElements();
+        mdlDia.addElement("DIAS");
+         cmbDia.setModel(mdlDia);
+         LimpiarTabla();
+         cmbDia.setEnabled(false);
         mdlTabla.setColumnIdentifiers(new Object []{"Codigo","Carnet","Nombres","Apellidos","Articulo","Cantidad","Fecha pedido","Fecha devolucion"});
         mdlCodigos.addElement("Seleccionar");
         rstTabla=a.mostrarTodos();
@@ -38,7 +54,7 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
          try {
             while (rstCodigos.next()){
                 if(rstCodigos.getDate(6)==null){
-                 mdlCodigos.addElement(rstCodigos.getInt(1));   
+                 mdlCodigos.addElement(rstCodigos.getString(1));   
                 }
                 
             }
@@ -50,21 +66,17 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
             try {
                 while(rstTabla.next()){
                     if(rstTabla.getDate(8)==null){
-                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    mdlTabla.addRow(new Object []{(rstTabla.getString(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
                     }
                     
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Actualizar();
-    }
-    private void Actualizar(){
-        mdlDia.removeAllElements();
-        mdlDia.addElement("DIAS");
-         cmbDia.setModel(mdlDia);
-         cmbDia.setEnabled(false);
-        
+            cmbAnio.setSelectedIndex(0);
+             cmbCodigos.setSelectedIndex(0);
+              cmbMes.setSelectedIndex(0);
+              cmbDia.setSelectedIndex(0);
     }
      private boolean Bisiesto(int a){
         
@@ -285,7 +297,10 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Debe seleccionar todos los campos");
         }
         else{
-            
+            String fecha=cmbAnio.getSelectedItem()+"/"+cmbMes.getSelectedIndex()+"/"+cmbDia.getSelectedIndex();
+            String cod=cmbCodigos.getSelectedItem()+"";
+            a.Devolver(cod,fecha);
+            Actualizar();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

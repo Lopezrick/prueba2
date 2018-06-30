@@ -240,7 +240,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
         
             try {
                 while(rstTabla.next()){
-                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});
+                    mdlTabla.addRow(new Object []{(rstTabla.getString(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(FrmBuscarPrestamo.class.getName()).log(Level.SEVERE, null, ex);
@@ -258,7 +258,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
             try {
                 while(rstTabla.next()){
                     if(rstTabla.getDate(8)==null){
-                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    mdlTabla.addRow(new Object []{(rstTabla.getString(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
                     }
                     
                 }
@@ -279,7 +279,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
             try {
                 while(rstTabla.next()){
                     
-                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    mdlTabla.addRow(new Object []{(rstTabla.getString(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
                     
                     
                 }
@@ -296,7 +296,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
             try {
                 while(rstTabla.next()){
                     
-                    mdlTabla.addRow(new Object []{(rstTabla.getInt(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
+                    mdlTabla.addRow(new Object []{(rstTabla.getString(1)),(rstTabla.getString(2)),(rstTabla.getString(3)),(rstTabla.getString(4)),(rstTabla.getString(5)),(rstTabla.getInt(6)),(rstTabla.getDate(7)),(rstTabla.getDate(8))});    
                     
                     
                 }

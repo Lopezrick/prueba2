@@ -32,7 +32,8 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
         initComponents();
         txtCodigo.setEnabled(true);
          Actualizar();
-         
+         txtCodigo.setText(""+a.siguienteCod());
+         txtCodigo.setEnabled(false);
     }
     private void Actualizar(){
         mdlArticulos.removeAllElements();
