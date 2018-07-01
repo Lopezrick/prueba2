@@ -18,6 +18,7 @@ public class FrmAgregarAlumno extends javax.swing.JFrame {
      */
     public FrmAgregarAlumno() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

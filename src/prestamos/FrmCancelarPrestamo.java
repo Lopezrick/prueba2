@@ -31,6 +31,7 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
 
     public FrmCancelarPrestamo() {
         initComponents();
+        this.setLocationRelativeTo(null);
         
             Actualizar();
     }
@@ -190,9 +191,9 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
                                 .addComponent(jButton1)))))
                 .addGap(97, 97, 97))
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 961, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +214,7 @@ public class FrmCancelarPrestamo extends javax.swing.JFrame {
                     .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();

@@ -31,7 +31,7 @@ public class FrmBuscarPrestamo extends javax.swing.JFrame {
 
     public FrmBuscarPrestamo() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         Actualizar();
         rbCarnet.setSelected(true);
         cmbCodigos.setEnabled(false);

@@ -30,6 +30,7 @@ public class FrmNuevoPrestamo extends javax.swing.JFrame {
    
     public FrmNuevoPrestamo() {
         initComponents();
+        this.setLocationRelativeTo(null);
         txtCodigo.setEnabled(true);
          Actualizar();
          txtCodigo.setText(""+a.siguienteCod());

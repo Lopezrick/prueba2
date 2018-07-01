@@ -5,6 +5,8 @@
  */
 package prestamos;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author RICK LOPEZ
@@ -16,6 +18,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
      */
     public FrmPrincipal() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -39,6 +42,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnNuevoPrestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoPrestamoActionPerformed(evt);
+            }
+        });
+        btnNuevoPrestamo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnNuevoPrestamoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                btnNuevoPrestamoKeyTyped(evt);
             }
         });
 
@@ -133,6 +144,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
         obj.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnNuevoPrestamoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuevoPrestamoKeyTyped
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_btnNuevoPrestamoKeyTyped
+
+    private void btnNuevoPrestamoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuevoPrestamoKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnNuevoPrestamoKeyPressed
 
     /**
      * @param args the command line arguments
