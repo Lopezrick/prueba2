@@ -17,6 +17,31 @@ public class Prestamos {
         cn.UID("INSERT INTO detalleprestamo(codPrestamo,carnet,idArticulo,cantidad,fechaPedido) VALUES('" + cod + "','" + carnet + "','" + idArticulo + "','" + cantidad + "','" + fecha + "')");
         
     }
+    public void agregarUsuario(String usuario, String password) {
+        
+        cn.UID("INSERT INTO usuarios(usuario,password) VALUES('" + usuario + "','" + password + "')");
+        
+    }
+    public boolean verificarUsuario(String usuario,String password){
+      ResultSet rs=null;
+      boolean acceso=false;  
+      rs=cn.getValores("SELECT*FROM usuarios where usuario='" + usuario + "'");  
+        try {
+                while(rs.next()){
+                    if(rs.getString(1).equals(usuario)&&rs.getString(2).equals(password)){
+                        acceso=true;
+                    }
+                        
+                    
+                }
+            
+      }  catch (SQLException ex) {
+             Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         return acceso;
+        
+        
+    }
     public void agregarAlumno(String carnet, String nombres, String apellidos) {
         cn.UID("INSERT INTO alumnos(carnet,nombres,apellidos) VALUES('" + carnet + "','" + nombres + "','" + apellidos + "')");
         
