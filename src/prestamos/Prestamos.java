@@ -88,10 +88,16 @@ public class Prestamos {
       }  catch (SQLException ex) {
              Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
          }
+          if(cod.equals("")){
+           cod="00001";   
+          }
+          else{
           int l=cod.length()-1;
           String ceros=cod.substring(0, l);
           int n= Integer.parseInt(cod)+1;
-          cod=ceros+n;
+          cod=ceros+n;    
+          }
+          
           return cod; 
     }
       public void Devolver(String codigo,String fecha){
